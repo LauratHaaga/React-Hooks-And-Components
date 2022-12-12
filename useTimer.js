@@ -1,19 +1,18 @@
 import { h } from 'preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
-export default function useTimer({ endDate, startDate, delay }) {
+export default function useTimer({ endDate, startDate, delay = 1000 }) {
     const targetDate = new Date(endDate).getTime();
     const [countDown, setCountDown] = useState({ finished: false, hasStarted: false });
     const timer = useRef();
+    const startTime = startDate ? new Date(startDate) : new Date();
 
     useEffect(() => {
-        if (new Date(startDate).getTime() <= new Date().getTime()) {
-            setCountDown((prev) => ({ ...prev, hasStarted: true }));
-
+        if (startTime.getTime() <= new Date().getTime()) {
             timer.current = setInterval(() => {
                 const now = new Date().getTime();
                 const diff = targetDate - now;
-  
+                
                 if (diff <= 0) {
                     setCountDown((prev) => ({ ...prev, finished: true, hasStarted: false }));
                     clearInterval(timer.current);
@@ -27,6 +26,7 @@ export default function useTimer({ endDate, startDate, delay }) {
   
                 setCountDown((prev) => ({
                     ...prev,
+                    hasStarted: true,
                     finished: false,
                     days,
                     hours,
