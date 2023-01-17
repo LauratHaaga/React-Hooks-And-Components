@@ -20,7 +20,7 @@ function reducer(state, action) {
     case 'FETCH_SUCCESS': {
         return {
             ...state,
-            data: [...state.data, payload],
+            data: { ...state.data, ...payload },
             isLoading: false,
         };
     }
