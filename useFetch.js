@@ -3,7 +3,7 @@ import { useReducer, useEffect } from 'preact/hooks';
 
 const initialState = {
     isLoading: true,
-    data: [],
+    data: {},
     error: null,
 };
 
